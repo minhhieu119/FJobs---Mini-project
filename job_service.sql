@@ -51,7 +51,6 @@ CREATE TABLE job_seeker_profile (
     last_name NVARCHAR(255) NULL,
     profile_photo NVARCHAR(255) NULL,
     resume NVARCHAR(255) NULL,
-    state NVARCHAR(255) NULL,
     work_authorization NVARCHAR(255) NULL,
     PRIMARY KEY (user_account_id),
     FOREIGN KEY (user_account_id) REFERENCES users([user_id])
@@ -66,7 +65,6 @@ CREATE TABLE recruiter_profile (
     first_name NVARCHAR(255) NULL,
     last_name NVARCHAR(255) NULL,
     profile_photo NVARCHAR(64) NULL,
-    state NVARCHAR(255) NULL,
     PRIMARY KEY (user_account_id),
     FOREIGN KEY (user_account_id) REFERENCES users([user_id])
 );
@@ -124,4 +122,3 @@ CREATE TABLE skills (
     FOREIGN KEY (job_seeker_profile) REFERENCES job_seeker_profile(user_account_id)
 );
 GO
-
