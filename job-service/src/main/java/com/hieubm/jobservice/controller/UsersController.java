@@ -49,7 +49,7 @@ public class UsersController {
         }
 
         usersService.addUser(users);
-        return "redirect:/dashboard"; // Chuyển đến trang dashboard
+        return "redirect:/dashboard/"; // Chuyển đến trang dashboard
     }
 
     @GetMapping("/login")
