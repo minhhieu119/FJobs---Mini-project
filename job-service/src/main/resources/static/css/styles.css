@@ -293,6 +293,15 @@ label.large-label {
   background-attachment: fixed;
 }
 
+.login_background {
+  height: 1000px;
+  overflow: hidden;
+  background-image:
+          url('../assets/vi-sao-nen-tuyen-dung-ung-vien-do-nhan-vien-gioi-thieu-hinh-anh.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .recruiter_background {
   height: 100vh;
   overflow: hidden;
