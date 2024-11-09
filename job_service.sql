@@ -1,4 +1,4 @@
-create database job_service
+﻿create database job_service
 use job_service
 
 -- Create users_type table
@@ -9,7 +9,7 @@ CREATE TABLE users_type (
 );
 
 -- Insert initial data into users_type
-INSERT INTO users_type (user_type_name) VALUES ('Recruiter'), ('Job Seeker');
+INSERT INTO users_type (user_type_name) VALUES ('Nhà tuyển dụng'), ('Ứng viên');
 
 -- Create users table
 CREATE TABLE users (
@@ -122,3 +122,24 @@ CREATE TABLE skills (
     FOREIGN KEY (job_seeker_profile) REFERENCES job_seeker_profile(user_account_id)
 );
 GO
+
+
+SELECT 
+                    COUNT(s.user_id) AS totalCandidates, 
+                    j.job_post_id, 
+                    j.job_title, 
+                    l.id AS locationId, 
+                    l.city,
+                    l.country, 
+                    c.id AS companyId, 
+                    c.name
+                FROM 
+                    job_post_activity j
+                INNER JOIN 
+                    job_location l ON j.job_location_id = l.id
+                INNER JOIN 
+                    job_company c ON j.job_company_id = c.id
+                LEFT JOIN 
+                    job_seeker_apply s ON s.job = j.job_post_id
+                GROUP BY 
+                    j.job_post_id, j.job_title, l.id, l.city, l.country, c.id, c.name

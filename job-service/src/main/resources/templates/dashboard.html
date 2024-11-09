@@ -40,31 +40,31 @@
 
             <li class="nav-item active">
                 <a sec:authorize="hasAuthority('Ứng viên')" class="nav-link" th:href="@{/dashboard/}"
-                ><i class="fas fa-search"></i>Search for Jobs</a
+                ><i class="fas fa-search"></i>Tìm kiếm công việc</a
                 >
             </li>
             <li class="nav-item ">
                 <a sec:authorize="hasAuthority('Ứng viên')" class="nav-link" th:href="@{/saved-jobs/}">
-                    <i class="fa-solid fa-eye"></i>View Saved Jobs</a>
+                    <i class="fa-solid fa-eye"></i>Lưu công việc</a>
             </li>
             <li class="nav-item ">
                 <a sec:authorize="hasAuthority('Ứng viên')" class="nav-link" th:href="@{/job-seeker-profile/}">
-                    <i class="fa-solid fa-pencil"></i>Edit Profile</a>
+                    <i class="fa-solid fa-pencil"></i>Sửa thông tin</a>
             </li>
 
             <li class="nav-item ">
                 <a sec:authorize="hasAuthority('Nhà tuyển dụng')" class="nav-link" th:href="@{/dashboard/add}"
-                ><i class="fa-solid fa-file-circle-plus"></i>Post New Job</a
+                ><i class="fa-solid fa-file-circle-plus"></i>Công việc mới</a
                 >
             </li>
             <li class="nav-item active">
                 <a sec:authorize="hasAuthority('Nhà tuyển dụng')" class="nav-link" th:href="@{/dashboard/}"
-                > <i class="fa-solid fa-eye"></i>View Your Jobs</a
+                > <i class="fa-solid fa-eye"></i>Các công việc</a
                 >
             </li>
             <li class="nav-item ">
                 <a sec:authorize="hasAuthority('Nhà tuyển dụng')" class="nav-link" th:href="@{/recruiter-profile/}"
-                > <i class="fa-solid fa-pencil"></i>Edit Account</a
+                > <i class="fa-solid fa-pencil"></i>Sửa thông tin</a
                 >
             </li>
 
@@ -95,10 +95,10 @@
     </div>
     <article>
         <div class="box" sec:authorize="hasAuthority('Nhà tuyển dụng')">
-            <h1 class="primary-title">Recruiter Dashboard</h1>
+            <h1 class="primary-title">Bảng điều khiển</h1>
         </div>
         <div class="box mt-3">
-            <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Ứng viên')">Search Results</label>
+            <label class="large-label px-3 mb-3" sec:authorize="hasAuthority('Ứng viên')">Kết quả tìm kiếm</label>
             <th:block th:each="jobPost:${jobPost}">
                 <a
                         th:href="@{/job-details-apply/{id}(id=${jobPost.jobPostId})}"
@@ -115,7 +115,7 @@
                                     <span
                                             class="title-span"
                                             sec:authorize="hasAuthority('Nhà tuyển dụng')"
-                                            th:text="'('+ @{${jobPost.totalCandidates}}+' Candidates Applied)'"
+                                            th:text="'('+ @{${jobPost.totalCandidates}}+' ứng viên)'"
                                     >(xx candidates applied)</span
                                     >
                                     <span
@@ -134,14 +134,14 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <label
-                                        th:text="${jobPost.jobLocationId.city+', '+ jobPost.jobLocationId.state}"
+                                        th:text="${jobPost.jobLocation.city} + ', ' + ${jobPost.jobLocation.country}"
                                 >
-                                    City State</label
+                                    Thành phố</label
                                 >
                             </div>
                             <div class="col-md-4 text-right">
-                                <label th:text="@{${jobPost.jobCompanyId.name}}"
-                                >Recruiter Company Name</label
+                                <label th:text="@{${jobPost.jobCompany.name}}"
+                                >Tên nhà tuyển dụng</label
                                 >
                             </div>
                         </div>

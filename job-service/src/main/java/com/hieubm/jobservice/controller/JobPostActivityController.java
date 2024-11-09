@@ -1,12 +1,15 @@
 package com.hieubm.jobservice.controller;
 
 import com.hieubm.jobservice.entity.JobPostActivity;
+import com.hieubm.jobservice.entity.RecruiterJobsDTO;
+import com.hieubm.jobservice.entity.RecruiterProfile;
 import com.hieubm.jobservice.entity.Users;
 import com.hieubm.jobservice.service.JobPostActivityService;
 import com.hieubm.jobservice.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,6 +35,12 @@ public class JobPostActivityController {
         if (!(authentication instanceof AnonymousAuthenticationToken)){
             String currentUsername = authentication.getName();
             model.addAttribute("username" , currentUsername);
+            if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(
+                    "Nhà tuyển dụng"))){
+                List<RecruiterJobsDTO> recruiterJobs = jobPostActivityService.getRecruiterJobs(((RecruiterProfile) currentUserProfile).getUserAccountId());
+                model.addAttribute("jobPost", recruiterJobs);
+                System.out.println(recruiterJobs);
+            }
         }
         model.addAttribute("user", currentUserProfile);
         return "dashboard";
