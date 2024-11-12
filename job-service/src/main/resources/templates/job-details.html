@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" style="height: 100%">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Bảng thông tin</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+</head>
+
+<body th:object="${jobDetails}" style="font-family: 'Montserrat';height: 100%">
+
+<header class="navbar navbar-expand-lg navbar-dark">
+    <label class="mt-2 ms-5 font-weight-bold h5">
+        <a th:href="@{/dashboard/}"><span class="logo_com font-weight-bold h5" style="color: white">
+          F-Jobs</span>
+        </a></label>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav m-auto mt-2 mt-lg-0">
+
+            <li class="nav-item active">
+                <a sec:authorize="hasAuthority('Ứng viên')" class="nav-link" th:href="@{/dashboard/}"
+                ><i class="fas fa-search"></i>Tìm kiếm</a
+                >
+            </li>
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Ứng viên')" class="nav-link" th:href="@{/saved-jobs/}">
+                    <i class="fa-solid fa-eye"></i>Xem công việc đã lưu</a>
+            </li>
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Ứng viên')" class="nav-link" th:href="@{/job-seeker-profile/}">
+                    <i class="fa-solid fa-pencil"></i>Sửa thông tin</a>
+            </li>
+
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Ứng viên')" class="nav-link" th:href="@{/dashboard/add}"
+                ><i class="fa-solid fa-file-circle-plus"></i>Tải lên công việc</a
+                >
+            </li>
+            <li class="nav-item active">
+                <a sec:authorize="hasAuthority('Nhà tuyển dụng')" class="nav-link" th:href="@{/dashboard/}"
+                > <i class="fa-solid fa-eye"></i>Xem công việc</a
+                >
+            </li>
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Nhà tuyển dụng')" class="nav-link" th:href="@{/recruiter-profile/}"
+                > <i class="fa-solid fa-pencil"></i>Sửa thông tin</a
+                >
+            </li>
+
+        </ul>
+        <img
+                class="rounded-circle me-3"
+                height="50px"
+                width="50x"
+                th:src="@{${user.photosImagePath}}"
+        />
+        <label th:text="${user.firstName+' '+user.lastName}" class="nav-item nav-link px-2 me-3"></label>
+
+        <button class="myBtn-light me-5" onclick="window.location.href='/logout'">Logout</button>
+    </div>
+</header>
+
+
+<!-- header-end -->
+<section class="section">
+    <!--    Side Bar Starts here    -->
+    <div class="sidenav px-5">
+        <div>
+            <hr/>
+        </div>
+    </div>
+    <article>
+        <div class="box px-3">
+            <a class="mt-3 ms-3 primary" id="back-link"><i class="fa-solid fa-angle-left me-1"></i> Quay lại</a>
+            <h1 class="primary-title mt-3"> Mô tả công việc </h1>
+            <div class="ms-3">
+                <h4 th:text="${jobDetails.jobTitle}" class="job-title text-left"></h4>
+                <div class="mt-1">
+                    <p th:text="${jobDetails.jobLocation.city+', '+ jobDetails.jobLocation.country}"
+                       class="m-0"></p>
+                    <p th:text="${jobDetails.jobCompany.name}"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="box mt-3">
+            <label class="large-label px-3 mt-3"> Chi tiết </label>
+
+            <div class="job-row">
+                <div class="row ">
+                    <div class="col-md-3">
+                        <label class="text-left">Ngày đăng:<span
+                                th:text="${jobDetails.postedDate}"></span></label>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <label> Lương: <span th:text="${jobDetails.salary}"></span></label>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <label>Loại: <span th:text="${jobDetails.jobType}"></span></label>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <label>Cách thức: <span th:text="${jobDetails.remote}"></span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-3 mb-3" sec:authorize="hasAuthority('Ứng viên')">
+                <label class="large-label ">Ghi chú</label>
+                <div th:utext="${jobDetails.descriptionOfJob}"></div>
+            </div>
+
+            <div class="px-3 mb-3" sec:authorize="hasAuthority('Nhà tuyển dụng')">
+                <div class="row">
+                    <div class="col-md-9">
+                        <label class="large-label ">Ghi chú </label>
+                        <div th:utext="${jobDetails.descriptionOfJob}"></div>
+                    </div>
+                    <div class="col-md-3 centerCandidate">
+                        <div class="candidatesApplied">
+                            <label>Ứng viên đã nộp</label>
+                            <th:block th:each="applyList:${applyList}">
+                                <a th:href="@{/job-seeker-profile/{id}(id=${applyList.userId.userAccountId})}"
+                                   class="white"
+                                   th:text="${applyList.userId.firstName+', '+applyList.userId.lastName}"></a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 px-3" sec:authorize="hasAuthority('Ứng viên')">
+                <div class="row">
+                    <div class="col-md-3">
+                        <form th:action="@{/job-details/apply/{id}(id=${jobDetails.jobPostId})}" th:object="${applyJob}"
+                              method="post">
+                            <button class="btn-sec btn-red w-100" type="submit" th:if="${alreadyApplied == false}">Apply
+                                Now
+                            </button>
+                            <button class="btn-sec btn-red w-100" disabled th:if="${alreadyApplied == true}">Already
+                                Applied
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <form th:action="@{/job-details/save/{id}(id=${jobDetails.jobPostId})}" th:object="${applyJob}"
+                              method="post">
+                            <button class="btn-sec btn-black w-100" type="submit" th:if="${alreadySaved == false}">Save
+                                Job
+                            </button>
+                            <button class="btn-sec btn-black w-100" disabled th:if="${alreadySaved == true}">Already
+                                Saved
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 px-3" sec:authorize="hasAuthority('Nhà tuyển dụng')">
+                <div class="row">
+                    <div class="col-md-3">
+                        <form th:action="@{/dashboard/edit/{id}(id=${jobDetails.jobPostId})}" method="post">
+                            <button class="btn-sec btn-red w-100" type="submit">Sửa công việc</button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <form th:action="@{/dashboard/deleteJob/{id}(id=${jobDetails.jobPostId})}" method="post">
+                            <button class="btn-sec btn-black w-100" type="submit">Xóa công việc</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </article>
+</section>
+
+
+<script
+        type="text/javascript"
+        th:src="@{/webjars/jquery/jquery.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+></script>
+<script>
+    var element = document.getElementById('back-link');
+    element.setAttribute('href', document.referrer);
+    element.onclick = function() {
+      history.back();
+      return false;
+    }
+</script>
+</body>
+</html>

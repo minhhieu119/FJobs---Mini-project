@@ -30,4 +30,8 @@ public class JobPostActivityService {
         }
         return recruiterJobsDTOList;
     }
+
+    public JobPostActivity getOne(int id) {
+        return jobPostActivityRepository.findById(id).orElseThrow(() -> new RuntimeException("Công việc không tồn tại..."));
+    }
 }
