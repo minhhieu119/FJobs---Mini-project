@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link
+            th:rel="stylesheet"
+            th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            media="all"
+            th:href="@{/css/font-awesome.min.css}"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            media="all"
+            th:href="@{/css/styles.css}"
+    />
+    <link
+            href="https://fonts.googleapis.com/css?family=Montserrat"
+            rel="stylesheet"
+    />
+    <meta charset="UTF-8"/>
+    <title>Sửa thông tin</title>
+</head>
+
+<body>
+<div class="row" style="margin-right:0; ">
+    <div class="col-6 seeker_background">
+        <div class="logo_left mt-3 pt-4 ms-5 pl-5">
+            <a th:href="@{/dashboard/}"><span class="logo_com font-weight-bold h5" style="color: white">
+          F-Jobs</span>
+            </a>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="myForm">
+            <form
+                    th:action="@{/job-seeker-profile/addNew}"
+                    th:object="${profile}"
+                    method="post"
+                    enctype="multipart/form-data"
+            >
+                <div class="row" style="margin-right:0; margin-left:0;">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-center pt-3">
+                            <h1 class="heading_font font-weight-bold">Ứng viên</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="heading_font font_sub_heading_color">Họ và tên</label>
+                        <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <input
+
+                                        id="user_account_id"
+                                        th:field="*{id}"
+                                        name="id"
+                                        type="text"
+                                        hidden
+                                />
+                                <input
+                                        placeholder="Họ"
+                                        id="firstName"
+                                        th:field="*{firstName}"
+                                        name="firstName"
+                                        type="text"
+                                        class="form-control"
+                                />
+                            </div>
+                            <div class="col-md-6 pl-1">
+                                <input
+                                        placeholder="Tên"
+                                        id="lastName"
+                                        name="lastName"
+                                        th:field="*{lastName}"
+                                        type="text"
+                                        class="form-control"
+                                />
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-4 pr-1">
+                                <input
+                                        placeholder="Thành phố"
+                                        name="city"
+                                        th:field="*{city}"
+                                        type="text"
+                                        class="form-control"
+                                />
+                            </div>
+                            <div class="col-md-4 pl-1">
+                                <input
+                                        placeholder="Quốc gia"
+                                        name="country"
+                                        th:field="*{country}"
+                                        type="text"
+                                        class="form-control"
+                                />
+                            </div>
+                        </div>
+                        <label class="mt-3 heading_font font_sub_heading_color"
+                        >Loại công việc</label
+                        >
+                        <div class="row">
+                            <div class="form-group col-md-6 pr-1">
+                                <select
+                                        required
+                                        class="form-control"
+                                        name="workAuthorization"
+                                        th:field="*{workAuthorization}"
+                                >
+                                    <option value="" selected>Loại công việc</option>
+                                    <option value="Công dân Việt Nam">Công dân Việt Nam</option>
+                                    <option value="Visa lao động">Visa lao động</option>
+                                    <option value="Công dân nước ngoài">Công dân nước ngoài</option>
+                                    <option value="Giấy phép lao động">Giấy phép lao động</option>
+                                    <option value="Thẻ tạm trú">Thẻ tạm trú</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 pl-1">
+                                <select
+                                        required
+                                        class="form-control"
+                                        name="employmentType"
+                                        th:field="*{employmentType}"
+                                >
+                                    <option value="" selected>Tìm kiếm việc làm</option>
+                                    <option value="Full-Time">Full-time</option>
+                                    <option value="Part-Time">Part-time</option>
+                                    <option value="Freelance">Tự do</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class=" heading_font font_sub_heading_color"
+                        >Kĩ năng</label
+                        >
+                        <div class="parent" th:each="skills, iterStat : *{skills}">
+                            <div id="skill-repeat">
+                                <div class="row">
+                                    <div class="col-md-4 pr-1">
+                                        <input
+                                                type="text"
+                                                th:field="*{skills[__${iterStat.index}__].id}"
+                                                hidden
+                                        />
+                                        <input
+                                                placeholder="Tên kĩ năng"
+                                                type="text"
+                                                class="form-control"
+                                                th:field="*{skills[__${iterStat.index}__].name}"
+                                        />
+                                    </div>
+                                    <div class="col-md-4 px-1">
+                                        <input
+                                                placeholder="Số năm kinh nghiệm"
+                                                type="text"
+                                                class="form-control"
+                                                th:field="*{skills[__${iterStat.index}__].yearsOfExperience}"
+                                        />
+                                    </div>
+                                    <div class="form-group col-md-4 pl-1">
+                                        <select
+                                                required
+                                                class="form-control"
+                                                th:field="*{skills[__${iterStat.index}__].experienceLevel}"
+                                        >
+                                            <option value="Experience Level" selected>Cấp độ</option>
+                                            <option value="Beginner">Sơ cấp</option>
+                                            <option value="Intermediate">Trung cấp</option>
+                                            <option value="Advance">Cao cấp</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row gutters" sec:authorize="hasAuthority('Ứng viên')">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="text-left mt-2">
+                                    <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            id="addSkill"
+                                    >
+                                        Thêm kĩ năng
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-5 me-5" sec:authorize="hasAuthority('Ứng viên')">
+                                <label class="heading_font font_sub_heading_color">
+                                    Ảnh</label
+                                >
+                                <input
+                                        type="file"
+                                        name="image"
+                                        class="form-control"
+                                        accept="image/png, image/jpeg"
+                                />
+                                <input type="text" name="profilePhoto" th:field="*{profilePhoto}" class="form-control"
+                                       hidden/>
+
+                            </div>
+                            <div class="col-md-5 me-5">
+                                <label class="heading_font font_sub_heading_color">
+                                    Hồ sơ CV</label
+                                >
+                                <input
+                                        sec:authorize="hasAuthority('Ứng viên')"
+                                        type="file"
+                                        name="pdf"
+                                        class="form-control"
+                                        required="true"
+                                        accept="application/pdf"
+                                />
+                                <input type="text" name="resume" th:field="*{resume}" class="form-control" hidden/>
+                                <a sec:authorize="hasAuthority('Nhà tuyển dụng')"
+                                   th:href="@{|/job-seeker-profile/downloadResume?fileName=${profile.resume}&&userID=${profile.userAccountId}|}">Tải xuống hồ sơ</a>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 col d-flex justify-content-center"
+                             sec:authorize="hasAuthority('Ứng viên')">
+                            <div class="text-right">
+                                <button
+                                        type="submit"
+                                        id="submit2"
+                                        name="submit"
+                                        class="btn btn-primary base_button px-4 py-2"
+                                >
+                                    Lưu
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div sec:authorize="hasAuthority('Nhà tuyển dụng')">
+
+</div>
+</body>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/jquery/jquery.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+></script>
+<script sec:authorize="hasAuthority('Nhà tuyển dụng')">
+    console.log("Disable inputs");
+  $("input").prop( "disabled", true );
+   $("select").prop( "disabled", true );
+       $("button").prop( "disabled", true );
+</script>
+<script>
+
+
+    var counter = 0;
+     $(document).on("click", "#addSkill", function (e) {
+       e.preventDefault();
+       counter++;
+        var newRow = jQuery("<div id='skill-repeat'><div class='row'>"+
+                   "    <div class='col-md-4 pr-1'>"+
+                   "     <input"+
+                   "        hidden type='text'"+
+                   "        class='form-control' "+
+                   "        name='skills["+counter+"].Id'"+
+                   "      />"+
+                   "      <input"+
+                   "        placeholder='Tên kĩ năng'"+
+                   "        type='text'"+
+                   "        class='form-control'"+
+                   "        name='skills["+counter+"].name'"+
+                   "      />"+
+                   "    </div>"+
+                   "    <div class='col-md-4 px-1'>"+
+                   "      <input"+
+                   "        placeholder='Số năm kinh nghiệm'"+
+                   "        type='text'"+
+                   "        class='form-control'"+
+                   "        name='skills["+counter+"].yearsOfExperience'"+
+                   "      />"+
+                   "    </div>"+
+                   "    <div class='form-group col-md-4 pl-1'>"+
+                   "      <select"+
+                   "        required"+
+                   "        class='form-control'"+
+                   "        name='skills["+counter+"].experienceLevel'"+
+                   "      >"+
+                   "        <option selected>Cấp độ</option>"+
+                   "        <option value='Beginner'>Sơ cấp</option>"+
+                   "        <option value='Intermediate'>Trung cấp</option>"+
+                   "        <option value='Advance'>Cao cấp</option>"+
+                   "      </select>"+
+                   "    </div>"+
+                   "  </div>"+
+                   "</div>");
+        console.log(newRow);
+       $('#skill-repeat')
+         .parent('div.parent')
+         .append(newRow);
+
+     });
+</script>
+</html>

@@ -293,6 +293,15 @@ label.large-label {
   background-attachment: fixed;
 }
 
+.seeker_background {
+  height: 100vh;
+  overflow: hidden;
+  background-image:
+          url('../assets/ung-vien.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .login_background {
   height: 1000px;
   overflow: hidden;

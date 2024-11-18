@@ -54,6 +54,12 @@ public class JobSeekerProfile {
         this.userId = users;
     }
 
+    @Transient
+    public String getPhotosImagePath () {
+        if (profilePhoto == null || id == null) return  null;
+        return "/photos/candidate/" + id + "/" + profilePhoto;
+    }
+
     @Override
     public String toString() {
         return "JobSeekerProfile{" +
